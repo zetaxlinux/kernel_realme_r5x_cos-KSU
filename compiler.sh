@@ -1,7 +1,6 @@
 #!/bin/bash
 
 rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.6.7
-cd scripts/ufdt/ && rm -rf libufdt && git clone https://android.googlesource.com/platform/system/libufdt && cd ../.. && 
 
 echo -e "\033[93m==========================="
 echo -e "\033[93m= START COMPILING KERNEL  ="
