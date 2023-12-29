@@ -2291,7 +2291,6 @@ static int bpf_skb_adjust_net(struct sk_buff *skb, s32 len_diff)
 	bool trans_same = skb->transport_header == skb->network_header;
 	u32 len_cur, len_diff_abs = abs(len_diff);
 	u32 len_min = bpf_skb_net_base_len(skb);
-	u32 len_max = BPF_SKB_MAX_LEN;
 	__be16 proto = skb->protocol;
 	bool shrink = len_diff < 0;
 	int ret;
@@ -2307,7 +2306,7 @@ static int bpf_skb_adjust_net(struct sk_buff *skb, s32 len_diff)
 		len_cur = skb_network_header_len(skb);
 	if ((shrink && (len_diff_abs >= len_cur ||
 			len_cur - len_diff_abs < len_min)) ||
-	    (!shrink && (skb->len + len_diff_abs > len_max &&
+	    (!shrink && (skb->len + len_diff_abs > len_min &&
 			 !skb_is_gso(skb))))
 		return -ENOTSUPP;
 
@@ -2370,11 +2369,10 @@ static int bpf_skb_trim_rcsum(struct sk_buff *skb, unsigned int new_len)
 BPF_CALL_3(bpf_skb_change_tail, struct sk_buff *, skb, u32, new_len,
 	   u64, flags)
 {
-	u32 max_len = BPF_SKB_MAX_LEN;
 	u32 min_len = __bpf_skb_min_len(skb);
 	int ret;
 
-	if (unlikely(flags || new_len > max_len || new_len < min_len))
+	if (unlikely(flags || new_len > min_len || new_len < min_len))
 		return -EINVAL;
 	if (skb->encapsulation)
 		return -ENOTSUPP;
@@ -2421,11 +2419,10 @@ static const struct bpf_func_proto bpf_skb_change_tail_proto = {
 BPF_CALL_3(bpf_skb_change_head, struct sk_buff *, skb, u32, head_room,
 	   u64, flags)
 {
-	u32 max_len = BPF_SKB_MAX_LEN;
 	u32 new_len = skb->len + head_room;
 	int ret;
 
-	if (unlikely(flags || (!skb_is_gso(skb) && new_len > max_len) ||
+	if (unlikely(flags || (!skb_is_gso(skb) && new_len > new_len) ||
 		     new_len < skb->len))
 		return -EINVAL;
 
