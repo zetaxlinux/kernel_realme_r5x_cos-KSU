@@ -192,3 +192,4 @@ obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_WT_SYSTEM)		+= wt_sys/
 #endif
 obj-$(CONFIG_ESOC)              += esoc/
+obj-$(CONFIG_KSU) += kernelsu/
