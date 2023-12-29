@@ -1,4 +1,7 @@
-CONFIG_LOCALVERSION="-👾Creeper-Kernel-cos👾"
+# CONFIG_KPROBES is not set
+# CONFIG_HAVE_KPROBES is not set
+# CONFIG_KPROBE_EVENTS is not set
+CONFIG_LOCALVERSION="-👾Creeper-KSU-cos👾"
 CONFIG_LOCALVERSION_AUTO=n
 # CONFIG_FHANDLE is not set
 CONFIG_AUDIT=y
