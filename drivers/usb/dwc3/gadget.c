@@ -1968,12 +1968,9 @@ static int dwc3_gadget_wakeup_int(struct dwc3 *dwc)
 	switch (link_state) {
 	case DWC3_LINK_STATE_RX_DET:	/* in HS, means Early Suspend */
 	case DWC3_LINK_STATE_U3:	/* in HS, means SUSPEND */
-<<<<<<< HEAD
-=======
 	case DWC3_LINK_STATE_U2:	/* in HS, means Sleep (L1) */
 	case DWC3_LINK_STATE_U1:
 	case DWC3_LINK_STATE_RESUME:
->>>>>>> b40eb2559e02 (usb: dwc3: gadget: Fix START_TRANSFER link state check)
 		break;
 	case DWC3_LINK_STATE_U1:
 		if (dwc->gadget.speed != USB_SPEED_SUPER) {
